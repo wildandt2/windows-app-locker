@@ -12,9 +12,30 @@ import sys
 import os
 
 # =============================
+# SAFE PATH (WORKS FOR EXE)
+# =============================
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+CONFIG_PATH = os.path.join(os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else BASE_DIR, "config.json")
+
+# =============================
+# CREATE CONFIG IF NOT EXISTS
+# =============================
+if not os.path.exists(CONFIG_PATH):
+    default_config = {
+        "apps": ["chrome.exe", "notepad.exe"],
+        "password_hash": ""
+    }
+    with open(CONFIG_PATH, "w") as f:
+        json.dump(default_config, f, indent=4)
+
+# =============================
 # LOAD CONFIG
 # =============================
-with open("config.json", "r") as f:
+with open(CONFIG_PATH, "r") as f:
     config = json.load(f)
 
 LOCKED_APPS = config["apps"]
@@ -31,7 +52,7 @@ def hash_password(password):
 
 
 # =============================
-# SET PASSWORD (FIRST TIME)
+# SET PASSWORD FIRST TIME
 # =============================
 def set_password():
     root = tk.Tk()
@@ -40,7 +61,7 @@ def set_password():
 
     if pwd:
         config["password_hash"] = hash_password(pwd)
-        with open("config.json", "w") as f:
+        with open(CONFIG_PATH, "w") as f:
             json.dump(config, f, indent=4)
         messagebox.showinfo("Success", "Password berhasil dibuat.")
         return hash_password(pwd)
@@ -90,11 +111,11 @@ def monitor():
 def create_tray():
     image = Image.new('RGB', (64, 64), color='black')
     draw = ImageDraw.Draw(image)
-    draw.text((10, 20), "L", fill='white')
+    draw.text((20, 20), "L", fill='white')
 
     def exit_app(icon, item):
         icon.stop()
-        sys.exit()
+        os._exit(0)
 
     icon = pystray.Icon("AppLocker", image, menu=pystray.Menu(
         pystray.MenuItem("Exit", exit_app)
@@ -106,7 +127,7 @@ def create_tray():
 # MAIN
 # =============================
 if __name__ == "__main__":
-    print("App Locker PRO berjalan...")
+    print("App Locker V3 Ultimate Running...")
 
     threading.Thread(target=monitor, daemon=True).start()
     threading.Thread(target=create_tray, daemon=True).start()
