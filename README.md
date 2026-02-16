@@ -17,4 +17,4 @@ pip install -r requirements.txt
 
 3. Run:
 
-python app_locker.py
+python main.py
