@@ -1,3 +1,5 @@
 psutil
+customtkinter
 pystray
 pillow
+watchdog
