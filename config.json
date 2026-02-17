@@ -1,9 +1,9 @@
 {
     "apps": [
-        "chrome.exe"
+        "chrome.exe",
+        "Notion.exe"
     ],
-    "folders": [
-        "C:\\Users\\YourName\\Documents\\Private"
-    ],
-    "password_hash": "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e"
+    "password_hash": "3331e35a73e561b86b1656301befaeb84ad93e8a63f3e2da97c7dbd62263ce61",
+    "max_attempts": 4,
+    "lockout_seconds": 300
 }
