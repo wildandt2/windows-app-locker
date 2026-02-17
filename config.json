@@ -1,9 +1,0 @@
-{
-    "apps": [
-        "chrome.exe",
-        "Notion.exe"
-    ],
-    "password_hash": "3331e35a73e561b86b1656301befaeb84ad93e8a63f3e2da97c7dbd62263ce61",
-    "max_attempts": 4,
-    "lockout_seconds": 300
-}
